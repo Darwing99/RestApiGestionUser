@@ -4,8 +4,12 @@ const auth=require('./routes/auth');
 const express=require('express');
 const mongose=require('mongoose');
 
+const config=require('config');
+
+
 mongose
-.connect('mongodb://localhost:27017/dbUserCursos')
+.connect(config.get('configDB.HOST'))
+// .connect('mongodb://localhost:27017/dbUserCursos')
 .then(()=>console.log('conectado...'))
 .catch(console.log('error'));
 

@@ -1,10 +1,10 @@
 const express =require('express');
 const Curso=require('../models/cursos_model');
-
+const verificaToken=require('../middlewares/auth');
 const Joi=require('joi');
 const ruta=express.Router();
 
-ruta.get('/activos',(req,res)=>{
+ruta.get('/activos',verificaToken,(req,res)=>{
     let resultado=listCursosActivos();
     resultado.then(cursos=>{
         res.json(cursos)
@@ -23,7 +23,7 @@ ruta.post('/',(req,res)=>{
     })
 });
 
-ruta.put('/:id',(req,res)=>{
+ruta.put('/:id',verificaToken,(req,res)=>{
     let resultado=updateCurso(req.params.id,req.body);
     //const {error,value}=schema.validate({nombre:req.body.nombre});
    // if(!error){
@@ -41,7 +41,7 @@ ruta.put('/:id',(req,res)=>{
 });
 
 
-ruta.delete('/:id',(req,res)=>{
+ruta.delete('/:id',verificaToken,(req,res)=>{
     let resultado=disableCurso(req.params.id);
     resultado.then(valor=>{
        res.json({

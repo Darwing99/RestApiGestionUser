@@ -1,4 +1,5 @@
 const express=require('express');
+const verificaToken=require('../middlewares/auth');
 const bcrypt=require('bcrypt');
 const Joi=require('joi');
 const ruta=express.Router();
@@ -31,7 +32,7 @@ const schema = Joi.object({
         .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
 })
 
-ruta.get('/activos',(req,res)=>{
+ruta.get('/activos',verificaToken,(req,res)=>{
   let resultado=listUserActivos();
     resultado.then(usuarios=>{
         res.json(usuarios)
@@ -51,7 +52,7 @@ async function listUserActivos(){
 }
 
 
-ruta.put('/:email',(req,res)=>{
+ruta.put('/:email',verificaToken,(req,res)=>{
     let resultado=updateUser(req.params.email,req.body);
     const {error,value}=schema.validate({nombre:req.body.nombre});
     if(!error){
@@ -127,7 +128,7 @@ async function crearUser(body){
 
 
 
-ruta.delete('/:email',(req,res)=>{
+ruta.delete('/:email',verificaToken,(req,res)=>{
     let resultado=enableUser(req.params.email);
     resultado.then(valor=>{
        res.json({

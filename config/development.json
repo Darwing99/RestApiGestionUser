@@ -1,0 +1,11 @@
+{
+    "nombre":"API REST Express - Usuarios",
+    "configDB":{
+        "HOST":"mongodb://localhost:27017/dbUserCursos"
+    },
+    "configToken":{
+        "SEED":"secret",
+        "expiration":"24h"
+    }
+
+}
